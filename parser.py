@@ -6,17 +6,18 @@ TWO = "15-24 years:"
 THREE = "25-54 years:"
 FOUR = "55-64 years:"
 FIVE = "65 years and over:"
-regex = (r'\d{,2}\.\d{,2}%')
+regex = (r'\d{,2}\.?\d{,2}%')
 
 #2016 data
 with open('unparsed_age_data.txt') as old, open('parsed_age_data.txt', 'w') as new:
 	i = 0
 	for line in old:
 		if i is 0:
-			country = line[:line.index(" 0")]
+			print(line)
+			country = line[:line.index("0-14")]
 			new.write("{ ")
 			new.write('"{}":"{}, "'.format(
-				"Country", country)
+				"Country", country.strip())
 			)
 			percentage = re.search(regex, line).group(0)
 			new.write('"{}":"{}, "'.format(
