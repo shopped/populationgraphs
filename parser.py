@@ -14,33 +14,33 @@ with open('unparsed_age_data.txt') as old, open('parsed_age_data.txt', 'w') as n
 	for line in old:
 		if i is 0:
 			print(line)
-			country = line[:line.index("0-14")]
+			country = line[:line.index("0-14")].strip()
 			new.write("{ ")
-			new.write('"{}":"{}, "'.format(
-				"Country", country.strip())
+			new.write('"{}":"{}", '.format(
+				"Country", country)
 			)
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}":"{}, "'.format(
+			new.write('"{}":"{}", '.format(
 				ONE, percentage)
 			)
 		if i is 1:
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}"."{}", '.format(
+			new.write('"{}":"{}", '.format(
 				TWO, percentage)
 			)
 		if i is 2:
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}"."{}", '.format(
+			new.write('"{}":"{}", '.format(
 				THREE, percentage)
 			)
 		if i is 3:
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}"."{}", '.format(
+			new.write('"{}":"{}", '.format(
 				FOUR, percentage)
 			)
 		if i is 4:
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}"."{}" '.format(
+			new.write('"{}":"{}" '.format(
 				FIVE, percentage)
 			)
 			new.write("}\n")
