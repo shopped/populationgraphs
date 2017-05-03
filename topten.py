@@ -59,6 +59,16 @@ class Application(tk.Frame):
 
 	def __init__(self, master=None):
 		super().__init__(master)
+		self.pack()
+		self.create_widgets()
+
+	def create_widgets(self):
+		for item in (ONE, TWO, THREE, FOUR, FIVE):
+			self.b = tk.Button(self)
+			self.b["text"] = item
+			#self.b["command"] = print(self.b["text"])
+			self.b.pack()
+
 
 array = sort_by_greatest_age_range(create_array(ONE), ONE)
 print_top_x(array, ONE, 10)
