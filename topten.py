@@ -18,16 +18,36 @@ def first_ten_countries():
 		for i in range(0, 9):
 			print(d[i][ONE])
 
-def sort_by_greatest_age_range(age_range):
-	#parse oldest data
+def create_array(age_range):
+	rt = []
 	with open('parsed_age_data.json') as data:
 		d = json.load(data)
-		for i in range(1, len(d)):
-			for j in range(0, i-1):
-				if d[i][age_range] > d[j][age_range]:
-					d[i].index = 0
-	#do a sort!
+		for i in range(0, len(d)):
+			rt.append(float(i))
+			percentage = d[i][age_range]
+			rt.append(float(percentage[:len(percentage)-1]))
+	return rt
 
+def sort_by_greatest_age_range(array, age_range):
+	a = array
+	for i in range(3, len(a), 2):
+		for j in range(1, i, 2):
+			if a[i] > a[j]:
+				a.insert(j-1, a.pop(i))
+				a.insert(j-1, a.pop(i))
+	return a
+
+def print_top_x(array, age_range, num=0):
+	a = array
+	if num==0:
+		num = int(len(array)/2)
+	print('Age Range: {}'.format(age_range))
+	with open('parsed_age_data.json') as data:
+		d = json.load(data)
+		for i in range(0, num*2, 2):
+			index = (int)(a[i])
+			c = d[index]["Country"]
+			print('{}.: {}\n%: {}'.format(int(i/2+1), c, a[i+1]))
 
 def sort_by_smallest_age_range(age_range):
 	with open('parsed_age_data.json') as data:
@@ -42,4 +62,5 @@ def sort_by_smallest_age_range(age_range):
 				d[i][age_range])
 			)
 
-sort_by_smallest_age_range(ONE)
+array = sort_by_greatest_age_range(create_array(ONE), ONE)
+print_top_x(array, ONE, 10)
