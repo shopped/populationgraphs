@@ -9,7 +9,8 @@ FIVE = "65 years and over:"
 regex = (r'\d{,2}\.?\d{,2}%')
 
 #2016 data
-with open('unparsed_age_data.txt') as old, open('parsed_age_data.txt', 'w') as new:
+with open('unparsed_age_data.txt') as old, open('parsed_age_data.json', 'w') as new:
+	new.write("[")
 	i = 0
 	for line in old:
 		if i is 0:
@@ -40,9 +41,10 @@ with open('unparsed_age_data.txt') as old, open('parsed_age_data.txt', 'w') as n
 			)
 		if i is 4:
 			percentage = re.search(regex, line).group(0)
-			new.write('"{}":"{}" '.format(
+			new.write('"{}":"{}"'.format(
 				FIVE, percentage)
 			)
-			new.write("}\n")
+			new.write("},\n")
 		i = 0 if (i is 4) else i + 1
+	new.write("]")
 	old.close()
