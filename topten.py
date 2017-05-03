@@ -1,6 +1,6 @@
 import re
 import json
-import operator as o
+import tkinter as tk
 
 #from display import extract_data as ed
 
@@ -49,18 +49,20 @@ def print_top_x(array, age_range, num=0):
 			c = d[index]["Country"]
 			print('{}.: {}\n%: {}'.format(int(i/2+1), c, a[i+1]))
 
-def sort_by_smallest_age_range(age_range):
-	with open('parsed_age_data.json') as data:
-		d = json.load(data)
-		dd = dict(d)
-		print(dd)
-		#sorted(d, key= o.attrgetter(age_range), reverse=True)
-		for i in range(0, 9):
-			print("{}:\t{}:{}".format(
-				d[i]["Country"],
-				age_range,
-				d[i][age_range])
-			)
+
+def menu():
+	root = tk.Tk()
+
+	root.mainloop()
+
+class Application(tk.Frame):
+
+	def __init__(self, master=None):
+		super().__init__(master)
 
 array = sort_by_greatest_age_range(create_array(ONE), ONE)
 print_top_x(array, ONE, 10)
+
+root = tk.Tk()
+app = Application(root)
+app.mainloop()
