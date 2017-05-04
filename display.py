@@ -46,7 +46,13 @@ def make_graph(country, set_color, i):
 		ax.text(i - .4, v + .3, str(v) + '%', color=set_color, fontweight='bold')
 
 
-
+def make_graphs(array):
+	ct = 0
+	colors = ("blue", "green", "red", "purple")
+	for i in len(array):
+		make_graph(array[i], colors[ct])
+		ct++
+		
 make_graph("India", "blue", 0)
 make_graph("America", "green", 1)
 make_graph("China", "red", 2)

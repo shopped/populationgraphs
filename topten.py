@@ -29,6 +29,15 @@ def create_array(age_range):
 			rt.append(float(percentage[:len(percentage)-1]))
 	return rt
 
+def sort_by_least_age_range(array, age_range):
+	a = array
+	for i in range(3, len(a), 2):
+		for j in range(1, i, 2):
+			if a[i] < a[j]:
+				a.insert(j-1, a.pop(i))
+				a.insert(j-1, a.pop(i))
+	return a
+
 def sort_by_greatest_age_range(array, age_range):
 	a = array
 	for i in range(3, len(a), 2):
@@ -67,18 +76,29 @@ class Application(tk.Frame):
 		self.create_widgets()
 
 	def create_widgets(self):
+		self.d = {}
+		self.mainlabel = tk.Label(self, text="Number of Countries to List").pack(side=tk.LEFT)
+		self.entry = tk.Entry(self)
+		self.entry.insert(0, "10")
+		self.entry.pack(side=tk.LEFT)
 		for item in (ONE, TWO, THREE, FOUR, FIVE):
-			self.b = tk.Button(self)
-			self.b["text"] = item
-			self.b["command"] = lambda: self.button_press(item)
-			self.b.pack()
+			x = self.d["{}frame".format(item)] = tk.Frame(self, width=250, height=100)
+			x.action = item
+			self.d["{}label".format(item)] = tk.Label(x, text=item).pack(side=tk.LEFT)
+			a = self.d["{}bottom".format(item)] = tk.Button(x, text='most')
+			a["command"] = lambda: self.button_press(x.action, int(self.entry.get()), True)
+			a.pack(side=tk.LEFT)
+			d = self.d["{}top".format(item)] = tk.Button(x, text='least')
+			d["command"] = lambda: self.button_press(x.action, int(self.entry.get()), False)
+			d.pack(side=tk.LEFT)
+			x.pack()
 
-	def button_press(self, action):
-		print_top_x(array, action, 10)
-
-
-array = sort_by_greatest_age_range(create_array(ONE), ONE)
-
+	def button_press(self, action, num=10, greatest=True):
+		if greatest:
+			array = sort_by_greatest_age_range(create_array(action), action)
+		else:
+			array = sort_by_least_age_range(create_array(action), action)
+		print_top_x(array, action, num)
 
 root = tk.Tk()
 app = Application(root)
