@@ -1,6 +1,7 @@
 import re
 import json
 import tkinter as tk
+import sys
 
 #from display import extract_data as ed
 
@@ -47,7 +48,10 @@ def print_top_x(array, age_range, num=0):
 		for i in range(0, num*2, 2):
 			index = (int)(a[i])
 			c = d[index]["Country"]
-			print('{}.: {}\n%: {}'.format(int(i/2+1), c, a[i+1]))
+			sys.stdout.write('{}.: {}\n%: {}'.format(int(i/2+1), c, a[i+1]))
+			sys.stdout.write('\n')
+		sys.stdout.write('\n\n')
+		sys.stdout.flush()
 
 
 def menu():
@@ -66,12 +70,15 @@ class Application(tk.Frame):
 		for item in (ONE, TWO, THREE, FOUR, FIVE):
 			self.b = tk.Button(self)
 			self.b["text"] = item
-			#self.b["command"] = print(self.b["text"])
+			self.b["command"] = lambda: self.button_press(item)
 			self.b.pack()
+
+	def button_press(self, action):
+		print_top_x(array, action, 10)
 
 
 array = sort_by_greatest_age_range(create_array(ONE), ONE)
-print_top_x(array, ONE, 10)
+
 
 root = tk.Tk()
 app = Application(root)
