@@ -65,7 +65,8 @@ class Application(tk.Frame):
 	def __init__(self, master=None):
 		super().__init__(master)
 		self.pack()
-		self.create_widgets()
+		#self.create_widgets()
+		self.create_widgets_manually()
 
 	def create_widgets(self):
 		self.d = {}
@@ -84,6 +85,32 @@ class Application(tk.Frame):
 			self.d["least"+item].pack(side=tk.LEFT)
 			x.pack()
 
+	def create_widgets_manually(self):
+		self.d = {}
+		self.mainlabel = tk.Label(self, text="Number of Countries to List").pack(side=tk.LEFT)
+		self.entry = tk.Entry(self)
+		self.entry.insert(0, "10")
+		self.entry.pack(side=tk.LEFT)
+		for item in (ONE, TWO, THREE, FOUR, FIVE):
+			x = self.d["frame"+item] = tk.Frame(self, width=250, height=100)
+			self.d["label"+item] = tk.Label(x, text=item).pack(side=tk.LEFT)
+			self.d["most"+item] = tk.Button(x, text='most')
+			self.d["most"+item].pack(side=tk.LEFT)
+			self.d["least"+item] = tk.Button(x, text='least')
+			self.d["least"+item].pack(side=tk.LEFT)
+			x.pack()
+		self.d["most"+ONE]["command"] = lambda: self.button_press(ONE, int(self.entry.get()), True)
+		self.d["most"+TWO]["command"] = lambda: self.button_press(TWO, int(self.entry.get()), True)
+		self.d["most"+THREE]["command"] = lambda: self.button_press(THREE, int(self.entry.get()), True)
+		self.d["most"+FOUR]["command"] = lambda: self.button_press(FOUR, int(self.entry.get()), True)
+		self.d["most"+FIVE]["command"] = lambda: self.button_press(FIVE, int(self.entry.get()), True)
+
+		self.d["least"+ONE]["command"] = lambda: self.button_press(ONE, int(self.entry.get()), False)
+		self.d["least"+TWO]["command"] = lambda: self.button_press(TWO, int(self.entry.get()), False)
+		self.d["least"+THREE]["command"] = lambda: self.button_press(THREE, int(self.entry.get()), False)
+		self.d["least"+FOUR]["command"] = lambda: self.button_press(FOUR, int(self.entry.get()), False)	
+		self.d["least"+FIVE]["command"] = lambda: self.button_press(FIVE, int(self.entry.get()), False)
+
 	def button_press(self, action, num=10, greatest=True):
 		if greatest:
 			array = sort_by_greatest_age_range(create_array(action))
@@ -91,6 +118,11 @@ class Application(tk.Frame):
 			array = sort_by_least_age_range(create_array(action))
 		print_top_x(array, action, num)
 
-root = tk.Tk()
-app = Application(root)
-app.mainloop()
+
+def main():
+	root = tk.Tk()
+	app = Application(root)
+	app.mainloop()
+
+if __name__ == "__main__":
+	main()
