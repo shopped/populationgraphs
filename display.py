@@ -28,25 +28,24 @@ t = TOTAL_GRAPHS
 
 def make_graph(country, set_color, i):
 	ax = plt.subplot2grid((t, t), (0, i), rowspan=t)
-	y_data = extract_data(country)
+	x_data = extract_data(country)
 	#y_pos = np.arange(len(groups))
-	y_pos = [0,1,2,3,4]
+	x_pos = [0,1,2,3,4]
 
-	ax.bar(y_pos, y_data, align='center', 
+	ax.bar(x_pos, x_data, align='center', 
 	color=set_color, ecolor='black')
-	ax.set_xticks(y_pos)
+	ax.set_xticks(x_pos)
 	ax.set_ylim([0,50])
 	ax.set_xticklabels(groups)
-	ax.set_title('Age of Population in {}'.format(country))
+	ax.set_title(country)
 
-	for i, v in enumerate(y_data): #gets x and y for the value of the bar chart
+	for i, v in enumerate(x_data): #gets x and y for the value of the bar chart
 		ax.text(i - .4, v + .3, str(v) + '%', color=set_color, fontweight='bold') #puts percentage of text above graph
 
 
 def make_four_graphs(array):
 	ct = 0
 	colors = ["blue", "green", "red", "purple"]
-	print('foo')
 	for i in range(len(array)):
 		make_graph(array[i], colors[ct], i)
 		ct += 1
@@ -58,7 +57,7 @@ graph(a)
 '''
 def graph4(array):
 	plt.rcdefaults()
-	plt.suptitle('(CIA FACTBOOK 2016)')
+	plt.suptitle('Age of Population')
 	make_four_graphs(array)
 	plt.show()
 
