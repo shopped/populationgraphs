@@ -82,15 +82,14 @@ class Application(tk.Frame):
 		self.entry.insert(0, "10")
 		self.entry.pack(side=tk.LEFT)
 		for item in (ONE, TWO, THREE, FOUR, FIVE):
-			x = self.d["{}frame".format(item)] = tk.Frame(self, width=250, height=100)
-			x.action = item
-			self.d["{}label".format(item)] = tk.Label(x, text=item).pack(side=tk.LEFT)
-			a = self.d["{}bottom".format(item)] = tk.Button(x, text='most')
-			a["command"] = lambda: self.button_press(x.action, int(self.entry.get()), True)
-			a.pack(side=tk.LEFT)
-			d = self.d["{}top".format(item)] = tk.Button(x, text='least')
-			d["command"] = lambda: self.button_press(x.action, int(self.entry.get()), False)
-			d.pack(side=tk.LEFT)
+			x = self.d["frame"+item] = tk.Frame(self, width=250, height=100)
+			self.d["label"+item] = tk.Label(x, text=item).pack(side=tk.LEFT)
+			self.d["most"+item] = tk.Button(x, text='most')
+			self.d["most"+item]["command"] = lambda: self.button_press("{}".format(item), int(self.entry.get()), True)
+			self.d["most"+item].pack(side=tk.LEFT)
+			self.d["least"+item] = tk.Button(x, text='least')
+			self.d["least"+item]["command"] = lambda: self.button_press(item, int(self.entry.get()), False)
+			self.d["least"+item].pack(side=tk.LEFT)
 			x.pack()
 
 	def button_press(self, action, num=10, greatest=True):
