@@ -65,6 +65,7 @@ class Application(tk.Frame):
 
 	def __init__(self, master=None):
 		super().__init__(master)
+		self.graph_array = ["India", "America", "China", "Japan"]
 		self.pack()
 		#self.create_widgets()
 		self.create_text_display_buttons_manually()
@@ -89,14 +90,15 @@ class Application(tk.Frame):
 
 	def create_graph_button(self):
 		self.graphButton = tk.Button(text="Graph four most recently displayed. Default = India, America, China, Japan")
-		self.graphButton["command"] = lambda: self.graph_top_four_recent()
+		self.graphButton["command"] = lambda: graph(self.graph_array)
 		self.graphButton.pack(side=tk.BOTTOM)
 
-		
-
-	def graph_top_four_recent(self):
-		a = ["India", "America", "China", "Japan"]
-		graph(a)
+	def modify_graph_array(self, array):
+		# search json data for country of top hit
+		for i in range(0, 4):
+			with open('parsed_age_data.json') as data:
+				d = json.load(data)
+				self.graph_array[i] = d[int(array[2*i])]["Country"]
 
 	def create_text_display_buttons_manually(self):
 		self.d = {}
@@ -129,6 +131,7 @@ class Application(tk.Frame):
 			array = sort_by_greatest_age_range(create_array(action))
 		else:
 			array = sort_by_least_age_range(create_array(action))
+		self.modify_graph_array(array)
 		print_top_x(array, action, num)
 
 
