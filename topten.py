@@ -2,6 +2,7 @@ import re
 import json
 import tkinter as tk
 import sys
+from display import graph4 as graph
 
 #from display import extract_data as ed
 
@@ -66,7 +67,8 @@ class Application(tk.Frame):
 		super().__init__(master)
 		self.pack()
 		#self.create_widgets()
-		self.create_widgets_manually()
+		self.create_text_display_buttons_manually()
+		self.create_graph_button()
 
 	def create_widgets(self):
 		self.d = {}
@@ -82,10 +84,21 @@ class Application(tk.Frame):
 			self.d["most"+item].pack(side=tk.LEFT)
 			self.d["least"+item] = tk.Button(x, text='least')
 			self.d["least"+item]["command"] = lambda: self.button_press(item, int(self.entry.get()), False)
-			self.d["least"+item].pack(side=tk.LEFT)
+			self.d["least"+item].pack(side=tk.TOP)
 			x.pack()
 
-	def create_widgets_manually(self):
+	def create_graph_button(self):
+		self.graphButton = tk.Button(text="Graph four most recently displayed. Default = India, America, China, Japan")
+		self.graphButton["command"] = lambda: self.graph_top_four_recent()
+		self.graphButton.pack(side=tk.BOTTOM)
+
+		
+
+	def graph_top_four_recent(self):
+		a = ["India", "America", "China", "Japan"]
+		graph(a)
+
+	def create_text_display_buttons_manually(self):
 		self.d = {}
 		self.mainlabel = tk.Label(self, text="Number of Countries to List").pack(side=tk.LEFT)
 		self.entry = tk.Entry(self)
